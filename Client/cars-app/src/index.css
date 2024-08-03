@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form input{
+    
+  background: transparent;
+  border:0;
+  border-bottom:1px solid rgb(204, 204, 204);
+  border-radius:0px;
+  outline:none;
+}
+
+.add-car input{
+  border:1px solid rgb(99, 97, 97);
+  width:26%;
+  border-radius: 6px;
+  height: 39px;
+  padding: 4px;
+}
+.add-car input:focus{
+  outline: none;
+}
+@media screen and (max-width:960px) {
+  .add-car input{
+    width: 100%;
+  }
+  .add-car{
+    margin-top:8%;
+  }
+}
