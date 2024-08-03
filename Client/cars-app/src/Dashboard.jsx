@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { CgSpinner } from "react-icons/cg";
+//import { span } from "react-icons/cg";
 import userLogo from './../src/assets/Images/userLogo.png';
 
 const Dashboard = ({ role, token }) => {
@@ -116,7 +116,7 @@ const Dashboard = ({ role, token }) => {
                         <input type="text" placeholder="Manufacturing Year" value={manufacturingYear} onChange={(e) => setManufacturingYear(e.target.value)} />
                         <input type="text" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
                         <button onClick={handleAddCar} className='btn btn-success md:w-[85px] flex items-center justify-center'>
-                            {loading ? <CgSpinner className='text-[1.5rem] animate-spin' /> : 'Add Car'}
+                            {loading ? <span className='h-[24px] w-[24px] animate-spin spinner'></span> : 'Add Car'}
                         </button>
                     </div>
                 </div>
@@ -151,7 +151,7 @@ const Dashboard = ({ role, token }) => {
                                 {role === 'admin' && (
                                     <td className='py-2 flex justify-around md:flex-row flex-col gap-[12px] md:gap-0'>
                                         <button onClick={() => handleDeleteCar(car.id)} className='bg-red-500 text-white flex items-center justify-center w-[60px] text-[12px] md:text-[14px] p-1 font-thin rounded-lg' disabled={deleteLoading === car.id}>
-                                            {deleteLoading === car.id ? <CgSpinner className='text-[1.2rem] animate-spin' /> : 'Delete'}
+                                            {deleteLoading === car.id ? <span className='h-[20px] w-[20px] spinner'></span> : 'Delete'}
                                         </button>
                                         <button onClick={() => handleUpdateCar(car)} className='bg-blue-400 text-white w-[60px] text-[12px] md:text-[14px] p-1 font-thin rounded-lg'>Update</button>
                                     </td>

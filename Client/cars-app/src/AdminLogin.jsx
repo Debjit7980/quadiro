@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CgSpinner } from "react-icons/cg";
+//import { span } from "react-icons/cg";
 import adminImg from './../src/assets/Images/admin.avif';
 
 const AdminLogin = ({ setToken, setRole }) => {
@@ -42,7 +42,7 @@ const AdminLogin = ({ setToken, setRole }) => {
     return (
         <div className='w-[100%] flex flex-col items-center justify-center mx-auto'>
             {loading ? (
-                <CgSpinner className='text-[3.5rem] absolute top-[50%] md:left-[50%] left-[45%] animate-spin' />
+                <span className='w-[45px] h-[45px] absolute top-[50%] md:left-[50%] left-[45%] spinner'></span>
             ) : (
                 <>
                     <h1 className='md:text-[32px] text-[26px] md:mt-[3%] md:mb-[3%] mt-[8%] mb-[8%] text-center'>
