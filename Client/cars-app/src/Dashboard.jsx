@@ -18,7 +18,7 @@ const Dashboard = ({ role, token }) => {
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null);
     const [userDetails, setUserDetails] = useState(null);
-    const BASE_URL = 'http://localhost:5000';
+    const BASE_URL = 'https://quadiro-backend.onrender.com';
 
     const fetchCars = async () => {
         const response = await axios.get(`${BASE_URL}/cars`);

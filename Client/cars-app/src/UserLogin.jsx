@@ -12,7 +12,7 @@ const UserLogin = ({ setToken, setRole }) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const BASE_URL = 'http://localhost:5000/user'; // Define the base URL here
+    const BASE_URL = 'https://quadiro-backend.onrender.com/user'; // Define the base URL here
 
     const handleLogin = async (e) => {
         e.preventDefault();

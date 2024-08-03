@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
@@ -15,11 +15,10 @@ app.use(bodyParser.json());
 
 // PostgreSQL client setup
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'quadiro',
-    password: 'root',
-    port: 5432
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // This is needed for connecting to Render PostgreSQL
+    }
 });
 
 // Secret key for JWT (store in .env file)
@@ -34,7 +33,6 @@ const checkAdminRole = (req, res, next) => {
     }
     next();
 };
-
 
 // Admin login endpoint
 app.post('/admin/login', async (req, res) => {
@@ -57,19 +55,18 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-//SignUp User
+// SignUp User
 app.post('/user/signup', async (req, res) => {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
         return res.status(400).json({ message: 'Email and password are required' });
     }
-    
+
     try {
         // Check if user already exists
         const result = await pool.query('SELECT * FROM "users" WHERE email = $1', [email]);
         if (result.rows.length > 0) {
-            //pool.release();
             return res.status(400).json({ message: 'Email already exists, sign in then' });
         }
 
@@ -78,8 +75,7 @@ app.post('/user/signup', async (req, res) => {
 
         // Insert new user
         await pool.query('INSERT INTO "users" (email, password) VALUES ($1, $2)', [email, hashedPassword]);
-        
-        //client.release();
+
         res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
         console.error('Error during signup:', error);
@@ -87,7 +83,7 @@ app.post('/user/signup', async (req, res) => {
     }
 });
 
-//Check for user's authentication
+// Check for user's authentication
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -96,7 +92,7 @@ const authenticateToken = (req, res, next) => {
         return res.sendStatus(401); // Unauthorized
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, JWT_SECRET, (err, user) => {
         if (err) {
             return res.sendStatus(403); // Forbidden
         }
@@ -121,7 +117,6 @@ app.get('/user/me', authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-
 
 // User login endpoint
 app.post('/user/login', async (req, res) => {
@@ -154,14 +149,13 @@ app.post('/user/login', async (req, res) => {
     }
 });
 
-
 // Fetch all cars
 app.get('/cars', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM cars');
         res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching cars', error);
+    } catch (err) {
+        console.error('Error fetching cars', err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
