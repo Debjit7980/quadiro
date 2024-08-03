@@ -51,7 +51,7 @@ const UserLogin = ({ setToken, setRole }) => {
 
     return (
         <div className='w-[100%] flex flex-col items-center justify-center mx-auto'>
-            {loading ? (<span className='w-[45px] h-[45px] absolute top-[50%] md:left-[50%] left-[45%]'>Loading</span>) :
+            {loading ? (<span className='w-[45px] h-[45px] absolute top-[50%] md:left-[50%] left-[45%] spinner'></span>) :
                 <><h1 className='md:text-[32px] text-[26px] md:mt-[2%] md:mb-[3%] mt-[8%] mb-[8%] text-center'>Assignment for Quadiro Technologies</h1>
                     <form
                         onSubmit={isSignup ? handleSignup : handleLogin}
