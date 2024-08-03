@@ -28,7 +28,7 @@ const UserLogin = ({ setToken, setRole }) => {
             navigate("/dashboard");
         } catch (error) {
             setLoading(false);
-            alert(error);
+            setError(error.response.data.message);
         }
     };
 

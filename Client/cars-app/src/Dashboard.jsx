@@ -101,7 +101,6 @@ const Dashboard = ({ role, token }) => {
         fetchCars();
         fetchDashboardData();
     };
-    console.log(userDetails);
     return (
         <div className='items-center md:p-4 p-0 pt-4 w-[100%] h-[100%]'>
             <div className='flex items-center justify-between'>
